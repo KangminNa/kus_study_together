@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1092508303701",
+    "project_id": "kus-study",
+    "storage_bucket": "kus-study.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1092508303701:android:c92b522e18b958f82d2fdc",
+        "android_client_info": {
+          "package_name": "com.example.kus_study_together"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsb5zuZdFBd3zHnq6-hssaDyvkkGpY-vI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
