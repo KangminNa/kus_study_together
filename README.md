@@ -1,16 +1,34 @@
-# kus_study_together
+# KUSTUDY
 
-A new Flutter project.
+![App 스크린샷](/path/to/screenshot.png)
 
-## Getting Started
+## 프로젝트 소개
 
-This project is a starting point for a Flutter application.
+"KUSTUDY"은 고려대학교 학생 위한 다목적 앱 개발 프로젝트입니다. 이 앱은 Flutter 및 Firebase 기술을 활용하여 다음과 같은 기능을 제공합니다:
 
-A few resources to get you started if this is your first Flutter project:
+- **학교 관련 일정 관리**: 멘토링, 동아리, 학과 행사 및 공지, 학교 공모전, 외부 공모전, 대회 등 다양한 학교 관련 행사일정을 홍보 및 관리 가능합니다.
+- **멘토링 및 스터디 모임 구성**: 학생들이 멘토링 세션 및 스터디 모임을 구성하고 참여자를 모집할 수 있는 기능을 제공합니다.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 주요 기능
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- 학교 일정 관리
+- 멘토링 및 스터디 모임 구성 및 참가
+- 공모전 및 대회 정보 제공
+
+## 개발 정보
+
+- Flutter 및 Firebase 기술 스택 활용
+- 개발 중인 앱의 스크린샷: [링크](/path/to/screenshots)
+
+## 개발 상태
+
+현재, MVP(Minimum Viable Product, 최소기능 제품)의 초점을 맞추고 있습니다.
+2023.10.27 ~ 11.27 일까지 고려대학교 세종캠퍼스 앱 아이디어 및 개발 공모전을 위한 프로젝트 입니다.
+
+
+## 연락처
+
+문의나 제안 사항이 있으시면 [이메일 주소](skrkdals4023@naver.com)로 연락해주세요.
+
+---
+**주의**: 본 프로젝트는 개발 중인 프로젝트로, 언제든지 변경될 수 있습니다.
