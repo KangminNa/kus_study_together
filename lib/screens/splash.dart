@@ -35,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              '학교 모임, 동아리, 멘토링, 공모전 일정',
+              '공모전, 모임, 스터디 학교 일정',
               style: TextStyle(
                 fontSize: 20,
                 color: Color.fromRGBO(128, 0, 0, 1),
@@ -43,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ),
             const Text(
-              '한 눈에 보고 싶다면',
+              '한곳에서 정리하자!',
               style: TextStyle(
                 fontSize: 20,
                 color: Color.fromRGBO(128, 0, 0, 1),

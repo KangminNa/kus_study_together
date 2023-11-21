@@ -37,29 +37,82 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('이메일/비밀번호 회원가입'),
+        backgroundColor: const Color.fromRGBO(128, 0, 0, 0.7),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            TextField(
-              controller: _emailController,
-              decoration: const InputDecoration(labelText: '이메일'),
+            const SizedBox(
+              height: 30,
             ),
-            TextField(
-              controller: _passwordController,
-              decoration: const InputDecoration(labelText: '비밀번호'),
-              obscureText: true,
+            SizedBox(
+              width: 100,
+              height: 100,
+              child: Image.asset(
+                'assets/images/kus2.png',
+              ),
             ),
-            ElevatedButton(
-              onPressed: () {
-                _signUpWithEmailAndPassword(context); // 회원가입 함수 호출
-              },
-              child: const Text('회원가입'),
+            const SizedBox(
+              height: 10,
+            ),
+            const Text(
+              '회원가입',
+              style: TextStyle(
+                fontSize: 40,
+                color: Color.fromRGBO(128, 0, 0, 1),
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Center(
+              child: SizedBox(
+                width: 300,
+                height: 150,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    TextField(
+                      controller: _emailController,
+                      decoration: const InputDecoration(
+                        labelText: '이메일',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextField(
+                      controller: _passwordController,
+                      decoration: const InputDecoration(
+                        labelText: '비밀번호',
+                        border: OutlineInputBorder(),
+                      ),
+                      obscureText: true,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            SizedBox(
+              width: 200,
+              child: ElevatedButton(
+                onPressed: () {
+                  _signUpWithEmailAndPassword(context); // 회원가입 함수 호출
+                },
+                child: const Text('회원가입'),
+              ),
             ),
           ],
         ),

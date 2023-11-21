@@ -51,17 +51,55 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextField(
-              controller: _emailController,
-              decoration: const InputDecoration(labelText: '이메일'),
+            SizedBox(
+              width: 100,
+              height: 100,
+              child: Image.asset(
+                'assets/images/kus2.png',
+              ),
             ),
-            TextField(
-              controller: _passwordController,
-              decoration: const InputDecoration(labelText: '비밀번호'),
-              obscureText: true,
+            const Text(
+              'KUSTUDY',
+              style: TextStyle(
+                fontSize: 40,
+                color: Color.fromRGBO(128, 0, 0, 1),
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Center(
+              child: SizedBox(
+                width: 300,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    TextField(
+                      controller: _emailController,
+                      decoration: const InputDecoration(
+                        labelText: '이메일',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextField(
+                      controller: _passwordController,
+                      decoration: const InputDecoration(
+                        labelText: '비밀번호',
+                        border: OutlineInputBorder(),
+                      ),
+                      obscureText: true,
+                    ),
+                  ],
+                ),
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -71,7 +109,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: const Text('로그인'),
                 ),
                 TextButton(
-                  // 회원가입으로 이동할 버튼
                   onPressed: _navigateToSignup,
                   child: const Text('회원가입'),
                 ),
