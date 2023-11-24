@@ -14,6 +14,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final AuthenticationService _authenticationService = AuthenticationService();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final String _errorMessage = '';
 
   Future<void> _signUpWithEmailAndPassword(BuildContext context) async {
     User? user = await _authenticationService.signUpWithEmailAndPassword(
@@ -33,6 +34,21 @@ class _SignupScreenState extends State<SignupScreen> {
     } else {
       // 회원가입 실패
       print('회원가입 실패');
+      // Set the error message for display
+      // Display error message using SnackBar
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            '이메일 형태와 최소 8자리 이상의 비밀번호를 입력하세요.',
+            style: TextStyle(
+              fontSize: 13,
+              color: Color.fromARGB(255, 255, 255, 255),
+            ),
+            textAlign: TextAlign.center,
+          ),
+          backgroundColor: Color.fromRGBO(128, 0, 0, 0.7),
+        ),
+      );
     }
   }
 
