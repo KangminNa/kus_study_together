@@ -2,12 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:kus_study_together/screens/writepage.dart';
 
-class SecondListView extends StatelessWidget {
-  const SecondListView({Key? key}) : super(key: key);
+class StudyList extends StatelessWidget {
+  const StudyList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('모임 참가'),
+        backgroundColor: const Color.fromRGBO(128, 0, 0, 0.7),
+      ),
       body: StreamBuilder(
         stream:
             FirebaseFirestore.instance.collection('study_posts').snapshots(),

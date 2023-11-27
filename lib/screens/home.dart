@@ -5,14 +5,14 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:kus_study_together/widgets/CalendarMemoWidget.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class FirstMain extends StatefulWidget {
-  const FirstMain({Key? key}) : super(key: key);
+class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
 
   @override
-  State<FirstMain> createState() => _FirstMainState();
+  State<Home> createState() => _Home();
 }
 
-class _FirstMainState extends State<FirstMain> {
+class _Home extends State<Home> {
   @override
   void initState() {
     super.initState();
@@ -31,12 +31,18 @@ class _FirstMainState extends State<FirstMain> {
               ? Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      '${user.email}님 안녕하세요!',
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text('KUSTUDY'),
+                        Text(
+                          '${user.email}님 안녕하세요!',
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 )

@@ -24,12 +24,13 @@ class _CalendarMemoWidgetState extends State<CalendarMemoWidget> {
 
   TextEditingController memoController = TextEditingController();
   Map<DateTime, String> memos = {};
+  List<MapEntry<DateTime, String>> memoList = [];
 
   @override
   void initState() {
     super.initState();
     initializeDateFormatting('ko_KR', null);
-    loadMemos(); // 앱 시작 시 Firestore에서 메모 데이터 불러오기
+    loadMemos();
   }
 
   @override
@@ -47,20 +48,40 @@ class _CalendarMemoWidgetState extends State<CalendarMemoWidget> {
             return isSameDay(selectedDay, day);
           },
           eventLoader: (DateTime date) {
-            // Check if there is a memo for the selected day
             return memos[date] != null ? [true] : [];
           },
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            IconButton(
-              icon: const Icon(Icons.refresh),
-              onPressed: () {
-                loadMemos();
-              },
-            ),
-          ],
+        const SizedBox(height: 16),
+        const Text(
+          '메모 목록',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
+        ),
+        SizedBox(
+          width: 300,
+          height: 300,
+          child: ListView.builder(
+            itemCount: memoList.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(
+                  DateFormat('yyyy년 MM월 dd일').format(memoList[index].key),
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                subtitle: Text(
+                  memoList[index].value,
+                  style: const TextStyle(fontSize: 14),
+                ),
+                trailing: IconButton(
+                  icon: const Icon(Icons.delete),
+                  onPressed: () {
+                    deleteMemo(memoList[index].key);
+                  },
+                ),
+              );
+            },
+          ),
         ),
       ],
     );
@@ -113,9 +134,7 @@ class _CalendarMemoWidgetState extends State<CalendarMemoWidget> {
         DateFormat('yyyy-MM-dd').format(selectedDay): memoController.text,
       }, SetOptions(merge: true));
 
-      setState(() {
-        memos[selectedDay] = memoController.text;
-      });
+      loadMemos();
     }
   }
 
@@ -135,8 +154,31 @@ class _CalendarMemoWidgetState extends State<CalendarMemoWidget> {
           memos = data.map((key, value) {
             return MapEntry(DateTime.parse(key), value as String);
           });
+
+          memoList = memos.entries.toList()
+            ..sort((a, b) => a.key.compareTo(b.key));
+        });
+      } else {
+        // 만약 데이터가 없다면 memoList를 빈 리스트로 초기화
+        setState(() {
+          memoList = [];
         });
       }
+    }
+  }
+
+  void deleteMemo(DateTime date) async {
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      await FirebaseFirestore.instance
+          .collection('user_memos')
+          .doc(user.uid)
+          .update({
+        DateFormat('yyyy-MM-dd').format(date): FieldValue.delete(),
+      });
+
+      loadMemos();
     }
   }
 }

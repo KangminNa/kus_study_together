@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:kus_study_together/screens/first_main.dart';
-import 'package:kus_study_together/screens/second_listview.dart';
-import 'package:kus_study_together/screens/third_mypage.dart';
+import 'package:kus_study_together/screens/home.dart';
+import 'package:kus_study_together/screens/meetings.dart';
+import 'package:kus_study_together/screens/studylist.dart';
+import 'package:kus_study_together/screens/mypage.dart';
 
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({Key? key}) : super(key: key);
@@ -14,9 +15,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
   int _currentIndex = 0;
   final PageController _pageController = PageController(initialPage: 0);
   final List<Widget> _pages = [
-    const FirstMain(),
-    const SecondListView(),
-    const ThirdMyPage(),
+    const Home(),
+    const StudyList(),
+    const Meetings(),
+    const MyPage(),
   ];
 
   @override
@@ -35,6 +37,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
         ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,
+          selectedItemColor: Colors.blue, // Set the color for selected item
+          unselectedItemColor:
+              Colors.grey, // Set the color for unselected items
+          backgroundColor: Colors.white, // Set the background color
           onTap: (index) {
             setState(() {
               _currentIndex = index;
@@ -49,6 +55,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
             BottomNavigationBarItem(
               icon: Icon(Icons.list),
               label: '스터디',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.group),
+              label: '참가모임',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
