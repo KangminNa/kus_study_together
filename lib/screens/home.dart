@@ -32,13 +32,21 @@ class _Home extends State<Home> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('KUSTUDY'),
+                        const Text(
+                          'KUSTUDY',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 6,
+                        ),
                         Text(
                           '${user.email}님 안녕하세요!',
                           style: const TextStyle(
-                            fontSize: 15,
+                            fontSize: 12,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
