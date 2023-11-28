@@ -38,46 +38,58 @@ class _CalendarMemoWidgetState extends State<CalendarMemoWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        TableCalendar(
-          locale: 'ko_KR',
-          firstDay: DateTime.utc(2021, 10, 16),
-          lastDay: DateTime.utc(2030, 3, 14),
-          focusedDay: focusedDay,
-          onDaySelected: _onDaySelected,
-          selectedDayPredicate: (DateTime day) {
-            return isSameDay(selectedDay, day);
-          },
-          eventLoader: (DateTime date) {
-            return memos[date] != null ? [true] : [];
-          },
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TableCalendar(
+            locale: 'ko_KR',
+            firstDay: DateTime.utc(2021, 10, 16),
+            lastDay: DateTime.utc(2030, 3, 14),
+            focusedDay: focusedDay,
+            onDaySelected: _onDaySelected,
+            selectedDayPredicate: (DateTime day) {
+              return isSameDay(selectedDay, day);
+            },
+            eventLoader: (DateTime date) {
+              return memos[date] != null ? [true] : [];
+            },
+          ),
         ),
         const SizedBox(height: 16),
-        const Text(
-          '메모 목록',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          textAlign: TextAlign.center,
-        ),
         SizedBox(
-          width: 300,
+          width: double.infinity,
           height: 300,
           child: ListView.builder(
             itemCount: memoList.length,
             itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(
-                  DateFormat('yyyy년 MM월 dd일').format(memoList[index].key),
-                  style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                subtitle: Text(
-                  memoList[index].value,
-                  style: const TextStyle(fontSize: 14),
-                ),
-                trailing: IconButton(
-                  icon: const Icon(Icons.delete),
-                  onPressed: () {
-                    deleteMemo(memoList[index].key);
-                  },
+              return GestureDetector(
+                onTap: () {
+                  _showMemoDialog(memoList[index].key, memoList[index].value);
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                        color: const Color.fromARGB(106, 158, 158, 158)),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  margin: const EdgeInsets.all(8.0),
+                  child: ListTile(
+                    title: Text(
+                      DateFormat('yyyy년 MM월 dd일').format(memoList[index].key),
+                      style: const TextStyle(
+                          fontSize: 12, fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text(
+                      memoList[index].value,
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.normal),
+                    ),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.delete),
+                      onPressed: () {
+                        deleteMemo(memoList[index].key);
+                      },
+                    ),
+                  ),
                 ),
               );
             },
@@ -94,14 +106,24 @@ class _CalendarMemoWidgetState extends State<CalendarMemoWidget> {
       memoController.text = memos[selectedDay] ?? '';
     });
 
+    _showMemoDialog(selectedDay, memoController.text);
+  }
+
+  void _showMemoDialog(DateTime date, String memo) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('메모 작성'),
+          title: const Text('메모 수정'),
           content: TextField(
-            controller: memoController,
-            decoration: const InputDecoration(labelText: '간단한 메모를 작성하세요'),
+            controller: TextEditingController(text: memo),
+            decoration: const InputDecoration(
+              labelText: '메모를 수정하세요',
+            ),
+            onChanged: (value) {
+              // 텍스트 필드 값이 변경될 때마다 memoController 업데이트
+              memoController.text = value;
+            },
           ),
           actions: [
             TextButton(
@@ -112,10 +134,17 @@ class _CalendarMemoWidgetState extends State<CalendarMemoWidget> {
             ),
             TextButton(
               onPressed: () {
-                saveMemo();
+                saveMemo(date);
                 Navigator.of(context).pop();
               },
               child: const Text('저장'),
+            ),
+            TextButton(
+              onPressed: () {
+                deleteMemo(date);
+                Navigator.of(context).pop();
+              },
+              child: const Text('삭제'),
             ),
           ],
         );
@@ -123,15 +152,20 @@ class _CalendarMemoWidgetState extends State<CalendarMemoWidget> {
     );
   }
 
-  void saveMemo() async {
+  void saveMemo(DateTime date) async {
     User? user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
+      String formattedDate = DateFormat('yyyy-MM-dd').format(date);
+      String memoText = memoController.text;
+
+      print('Saving memo for date: $formattedDate, Memo: $memoText');
+
       await FirebaseFirestore.instance
           .collection('user_memos')
           .doc(user.uid)
           .set({
-        DateFormat('yyyy-MM-dd').format(selectedDay): memoController.text,
+        formattedDate: memoText,
       }, SetOptions(merge: true));
 
       loadMemos();
@@ -159,7 +193,6 @@ class _CalendarMemoWidgetState extends State<CalendarMemoWidget> {
             ..sort((a, b) => a.key.compareTo(b.key));
         });
       } else {
-        // 만약 데이터가 없다면 memoList를 빈 리스트로 초기화
         setState(() {
           memoList = [];
         });

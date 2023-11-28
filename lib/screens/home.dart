@@ -63,8 +63,10 @@ class _Home extends State<Home> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-              padding: EdgeInsets.all(32.0),
-              child: CalendarMemoWidget(),
+              padding: EdgeInsets.all(22.0),
+              child: SingleChildScrollView(
+                child: CalendarMemoWidget(),
+              ),
             ),
             // 추가적인 위젯이 필요하다면 여기에 추가하세요.
           ],
