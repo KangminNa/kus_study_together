@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:kus_study_together/screens/detailpage.dart';
 import 'package:kus_study_together/screens/writepage.dart';
 
 class StudyList extends StatelessWidget {
@@ -9,7 +10,7 @@ class StudyList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('모임 참가'),
+        title: const Text('모임참가'),
         backgroundColor: const Color.fromRGBO(128, 0, 0, 0.7),
       ),
       body: StreamBuilder(
@@ -28,9 +29,42 @@ class StudyList extends StatelessWidget {
             itemCount: posts.length,
             itemBuilder: (context, index) {
               var post = posts[index];
-              return ListTile(
-                title: Text(post['content']),
-                // Add other information as needed
+              return Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListTile(
+                    title: Text(
+                      post['title'],
+                      style: const TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                    subtitle: Text(
+                      '${post['startDate']} ~ ${post['endDate']}',
+                      style: const TextStyle(
+                        fontSize: 12,
+                      ),
+                    ),
+                    onTap: () {
+                      // 클릭 시 DetailPage로 이동
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailPage(
+                            email: post['email'],
+                            content: post['content'],
+                            title: post['title'],
+                            participants: post['participants'],
+                            frequency: post['frequency'],
+                            startDate: post['startDate'],
+                            endDate: post['endDate'],
+                            member: post['member'],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
               );
             },
           );
