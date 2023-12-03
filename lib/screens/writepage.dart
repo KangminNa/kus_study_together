@@ -213,7 +213,7 @@ class _WritePageState extends State<WritePage> {
         'frequency': _selectedStudyFrequency?.toString(),
         'content': _contentController.text,
         'email': user.email,
-        'member': '',
+        'member': [],
       });
 
       Navigator.pop(context);
