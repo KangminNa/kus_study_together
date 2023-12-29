@@ -16,7 +16,7 @@
 ## 개발 정보
 
 - Flutter 및 Firebase 기술 스택 활용
-- 개발 중인 앱의 스크린샷: [링크](/path/to/screenshots)
+
 
 ## 개발 상태
 
